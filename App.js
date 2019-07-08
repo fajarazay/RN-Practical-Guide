@@ -42,6 +42,17 @@ export default class App extends Component<Props> {
     })
   };
 
+  placeDeletedHandler = index => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.filter((place, i) => {
+          return i !== index;
+        })
+      }
+    }
+    )
+  }
+
   render() {
 
     return (
@@ -54,7 +65,10 @@ export default class App extends Component<Props> {
             <Header />
             <View style={styles.container}>
               <PlaceInput onPlaceAdded={this.placeAddedHandler} />
-              <PlaceList places={this.state.places}></PlaceList>
+              <PlaceList
+                places={this.state.places}
+                onItemDeleted={this.placeDeletedHandler}
+              ></PlaceList>
             </View>
 
           </ScrollView>
