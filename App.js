@@ -56,24 +56,24 @@ export default class App extends Component<Props> {
   render() {
 
     return (
-      <Fragment>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <Header />
-            <View style={styles.container}>
-              <PlaceInput onPlaceAdded={this.placeAddedHandler} />
-              <PlaceList
-                places={this.state.places}
-                onItemDeleted={this.placeDeletedHandler}
-              ></PlaceList>
-            </View>
+      // <Fragment>
+      //   <StatusBar barStyle="dark-content" />
+      //   <SafeAreaView>
+      //     <ScrollView
+      //       contentInsetAdjustmentBehavior="automatic"
+      //       style={styles.scrollView}>
+      //       <Header />
+      <View style={styles.container}>
+        <PlaceInput onPlaceAdded={this.placeAddedHandler} />
+        <PlaceList
+          places={this.state.places}
+          onItemDeleted={this.placeDeletedHandler}
+        ></PlaceList>
+      </View>
 
-          </ScrollView>
-        </SafeAreaView>
-      </Fragment >
+      //     </ScrollView>
+      //   </SafeAreaView>
+      // </Fragment >
     );
   }
 };
