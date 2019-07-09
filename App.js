@@ -1,37 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, { Component } from "react";
+import { StyleSheet, View } from "react-native";
 
-import React, { Fragment, Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  StatusBar,
-} from 'react-native';
+import PlaceInput from "./src/components/PlaceInput/PlaceInput";
+import PlaceList from "./src/components/PlaceList/PlaceList";
+import PlaceDetail from "./src/components/PlaceDetail/PlaceDetail";
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-import PlaceInput from './src/components/PlaceInput/PlaceInput'
-import PlaceList from './src/components/PlaceList/PlaceList'
-console.disableYellowBox = true;
-
-//const App = () => {
-export default class App extends Component<Props> {
-
+export default class App extends Component {
   state = {
-    places: []
+    places: [],
+    selectedPlace: null
   };
 
   placeAddedHandler = placeName => {
@@ -39,62 +16,68 @@ export default class App extends Component<Props> {
       return {
         places: prevState.places.concat({
           key: Math.random(),
-          value: placeName,
+          name: placeName,
           image: {
-            uri: "https://cdn-images-1.medium.com/max/1200/1*ub1DguhAtkCLvhUGuVGr6w.png"
+            uri:
+              "https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg"
           }
-
         })
-      }
-    })
+      };
+    });
   };
 
-  placeDeletedHandler = key => {
+  placeDeletedHandler = () => {
     this.setState(prevState => {
       return {
         places: prevState.places.filter(place => {
-          return place.key !== key
+          return place.key !== prevState.selectedPlace.key;
+        }),
+        selectedPlace: null
+      };
+    });
+  };
+
+  modalClosedHandler = () => {
+    this.setState({
+      selectedPlace: null
+    });
+  };
+
+  placeSelectedHandler = key => {
+    this.setState(prevState => {
+      return {
+        selectedPlace: prevState.places.find(place => {
+          return place.key === key;
         })
-      }
-    }
-    )
-  }
+      };
+    });
+  };
 
   render() {
-
     return (
-      // <Fragment>
-      //   <StatusBar barStyle="dark-content" />
-      //   <SafeAreaView>
-      //     <ScrollView
-      //       contentInsetAdjustmentBehavior="automatic"
-      //       style={styles.scrollView}>
-      //       <Header />
       <View style={styles.container}>
+        <PlaceDetail
+          selectedPlace={this.state.selectedPlace}
+          onItemDeleted={this.placeDeletedHandler}
+          onModalClosed={this.modalClosedHandler}
+        />
         <PlaceInput onPlaceAdded={this.placeAddedHandler} />
         <PlaceList
           places={this.state.places}
-          onItemDeleted={this.placeDeletedHandler}
-        ></PlaceList>
+          onItemSelected={this.placeSelectedHandler}
+        />
       </View>
-
-      //     </ScrollView>
-      //   </SafeAreaView>
-      // </Fragment >
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    //backgroundColor: Colors.lighter,
-  },
   container: {
     flex: 1,
+    marginTop: 26,
     padding: 26,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  }
 });
