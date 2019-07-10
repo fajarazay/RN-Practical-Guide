@@ -14,6 +14,7 @@ class App extends Component {
 
   placeAddedHandler = placeName => {
     this.props.onAddPlace(placeName)
+    console.log('test debug console Place added')
   };
 
   placeDeletedHandler = () => {
@@ -25,7 +26,7 @@ class App extends Component {
   };
 
   placeSelectedHandler = key => {
-    this.props.onSelectedPlace(key)
+    this.props.onSelectPlace(key)
   };
 
   render() {
@@ -68,7 +69,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddPlace: name => dispatch(addPlace(name)),
     onDeletePlace: () => dispatch(deletePlace()),
-    onSelectedPlace: key => dispatch(selectPlace(key)),
+    onSelectPlace: key => dispatch(selectPlace(key)),
     onDeselectPlace: () => dispatch(deselectPlace())
   }
 }
